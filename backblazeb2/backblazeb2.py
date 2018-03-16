@@ -34,7 +34,10 @@ from Crypto.Cipher import AES
 def derive_key_and_iv(password, salt, key_length, iv_length):
     d = d_i = ''
     while len(d) < key_length + iv_length:
-        d_i = hashlib.md5(d_i + password + salt).digest()
+        d_i = hashlib.sha512(d_i + password + salt).digest()
+        # Extreme Encryption using Key derivation
+        # For more Information: https://docs.python.org/2/library/hashlib.html#hashlib.hashlib.algorithms
+        # d_i = hashlib.pbkdf2_hmac('sha512',password,salt,100000)
         d += d_i
     return d[:key_length], d[key_length:key_length + iv_length]
 
